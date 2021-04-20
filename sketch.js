@@ -4,6 +4,8 @@ var enemy,enemy2,enemy3,enemy4,enemy5,enemy6,enemy7,enemy8,enemy9,enemy10,enemy1
 var bulletGroup,playerBulletGroup,enemyGroup,playerGroup;
 var startCount=50;
 var gameoverimg,gameover;
+var score = 0;
+var star1,star2,star3,star1img,star2img,star3img;
 
 var gameState='play';
 
@@ -16,7 +18,10 @@ function preload(){
   gameoverimg=loadImage("images/gameover.png");
   lazersound=loadSound("sound/lazersound.mp3");
   l2enemyimg=loadImage("images/enemys.png");
-  mainenemyimg=loadImage("images/mainenemy.png");
+  mainenemyimg = loadImage("images/mainenemy.png");
+  star1img = loadImage("images/1star.png");
+  star2img = loadImage("images/2star.png");
+  star3img = loadImage("images/3star.png");
 }
 
 function setup() {
@@ -56,6 +61,9 @@ function draw() {
 
   if(gameState=='play'){
 
+    textSize(25);
+    text("Socre : "+score,25,660);
+
     if(bulletGroup.isTouching(playerGroup)){
      player.body.destroy();
      bulletGroup.destroyEach();
@@ -71,15 +79,49 @@ function draw() {
       if(enemyGroup.get(i).isTouching(playerBulletGroup)){
         //enemyGroup.get(i).visible = false; 
         enemyGroup.get(i).visible = false;
+        score = score + Math.round(random(20,50)/10)*10;
 
-        console.log(enemyGroup.get(i).visible);
+        // console.log(enemyGroup.get(i).visible);
         enemyGroup.get(i).destroy();
         bulletGroup.destroyEach();
       }
 
     }
 
- console.log(enemyGroup.length);
+    if(enemyGroup.length==0){
+      background("red");
+
+      if(score<=300){
+      star1 = createSprite(700,300)
+      star1.addImage(star1img);
+      star1.scale=0.2;
+      textSize(35);
+      fill('blue');
+      text("Total Score : "+score,600,200);
+    }
+
+    if(score<=499){
+      star2 = createSprite(700,300)
+      star2.addImage(star2img);
+      star2.scale=0.2;
+      textSize(40);
+      fill('blue');
+      text("Total Score : "+score,550,200);
+    }
+
+    if(score>=500){
+      star3 = createSprite(700,300)
+      star3.addImage(star3img);
+      star3.scale=0.2;
+      textSize(50);
+      fill('blue');
+      text("Total Score : "+score,500,200);
+    }
+
+
+    }
+
+//  console.log(enemyGroup.length);
 
 
   player.playerMove();

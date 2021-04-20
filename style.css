@@ -1,11 +1,13 @@
 html, body {
   margin: 0;
   padding: 0;
-  background-color: black;
+
 
 }
 canvas {
   display: block;
   margin-left: 5%;
   margin-top: 2%;
+  border: 5px dotted black;
+  
 }
